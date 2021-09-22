@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tonicapp.marsphotos.network.MarsApi
+import com.tonicapp.marsphotos.network.MarsApiFilter
 import com.tonicapp.marsphotos.network.MarsProperty
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -26,14 +27,14 @@ class OverviewViewModel: ViewModel() {
         get() = _navigateToSelectedProperty
 
     init {
-        getMarsPhoto()
+        getMarsPhoto(MarsApiFilter.SHOW_ALL)
     }
 
-    private fun getMarsPhoto(){
+    private fun getMarsPhoto(filter: MarsApiFilter){
         viewModelScope.launch {
             _status.value = NetworkStatus.LOADING
             try {
-                _properties.value = MarsApi.retrofitService.getPhotos()
+                _properties.value = MarsApi.retrofitService.getPhotos(filter.value)
                 _status.value = NetworkStatus.DONE
             } catch (e: Exception) {
                 _properties.value = ArrayList()
@@ -55,6 +56,11 @@ class OverviewViewModel: ViewModel() {
      */
     fun displayPropertyDetailsComplete() {
         _navigateToSelectedProperty.value = null
+    }
+
+
+    fun updateFilter(filter: MarsApiFilter){
+        getMarsPhoto(filter)
     }
 
 }

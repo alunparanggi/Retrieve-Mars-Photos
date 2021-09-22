@@ -1,13 +1,13 @@
 package com.tonicapp.marsphotos.ui.overview
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.tonicapp.marsphotos.R
 import com.tonicapp.marsphotos.databinding.FragmentOverviewBinding
+import com.tonicapp.marsphotos.network.MarsApiFilter
 
 class OverviewFragment : Fragment() {
 
@@ -38,8 +38,23 @@ class OverviewFragment : Fragment() {
             }
         })
 
+        setHasOptionsMenu(true)
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.overview_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.updateFilter(
+            when(item.itemId){
+            R.id.show_buy_menu -> MarsApiFilter.SHOW_BUY
+            R.id.show_rent_menu -> MarsApiFilter.SHOW_RENT
+            else -> MarsApiFilter.SHOW_ALL
+        } )
+        return true
+    }
 
 }
