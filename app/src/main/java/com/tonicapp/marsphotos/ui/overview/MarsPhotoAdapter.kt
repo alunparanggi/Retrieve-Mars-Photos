@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tonicapp.marsphotos.databinding.ItemMarsBinding
 import com.tonicapp.marsphotos.network.MarsProperty
 
-class MarsPhotoAdapter:
+class MarsPhotoAdapter(private val onClickListener: OnClickListener):
     ListAdapter<MarsProperty, MarsPhotoAdapter.MarsPhotoViewHolder>(DiffCallback) {
 
     /**
@@ -42,7 +42,14 @@ class MarsPhotoAdapter:
 
     override fun onBindViewHolder(holder: MarsPhotoViewHolder, position: Int) {
         val marsProperty = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(marsProperty)
+        }
         holder.bind(marsProperty)
+    }
+
+    class OnClickListener(val clickListener: (marsProperty: MarsProperty) -> Unit){
+        fun onClick(marsProperty: MarsProperty) = clickListener(marsProperty)
     }
 
 }

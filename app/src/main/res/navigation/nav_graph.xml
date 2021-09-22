@@ -9,5 +9,18 @@
         android:id="@+id/overviewFragment"
         tools:layout="@layout/fragment_overview"
         android:name="com.tonicapp.marsphotos.ui.overview.OverviewFragment"
-        android:label="OverviewFragment" />
+        android:label="OverviewFragment" >
+        <action
+            android:id="@+id/action_overviewFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        tools:layout="@layout/fragment_detail"
+        android:name="com.tonicapp.marsphotos.ui.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="selectedProperty"
+            app:argType="com.tonicapp.marsphotos.network.MarsProperty" />
+    </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.tonicapp.marsphotos.databinding.FragmentOverviewBinding
 
 class OverviewFragment : Fragment() {
@@ -22,7 +23,20 @@ class OverviewFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.recyclerView.adapter = MarsPhotoAdapter()
+
+        binding.recyclerView.adapter = MarsPhotoAdapter(
+            MarsPhotoAdapter.OnClickListener{
+                viewModel.displayPropertyDetails(it)
+            }
+        )
+
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, {
+            if ( null != it ) {
+                this.findNavController()
+                    .navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(it))
+                viewModel.displayPropertyDetailsComplete()
+            }
+        })
 
         return binding.root
     }
