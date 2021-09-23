@@ -14,8 +14,8 @@ How to Implement :
 ## Demo
 
 - When phone has good internet connection
-
-![good connection](https://i.postimg.cc/HxH3qRMG/ezgif-com-gif-maker-3.gif)
+  
+![good connection](https://i.postimg.cc/cJ6hRrr9/ezgif-com-gif-maker-3.gif)
 
 - When there's no connection
 
